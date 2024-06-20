@@ -7,7 +7,7 @@
   
 ## Un Gestor de Notas ✌ ✨
   
-Una aplicación simple para guardar 💾 , editar 🖊️ y organizar 💼 tus notas 📕
+Una simple app para `guardar` 💾 , `editar` 🖊️ y `organizar` 💼 tus notas 📕
 
 </div>
 
