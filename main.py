@@ -3,7 +3,7 @@ import flet as ft
 def main(page: ft.Page):
     page.title = "ToDo CU"
     page.adaptive = True
-    page.theme = ft.Theme(color_scheme_seed="red")
+    page.theme = ft.Theme(color_scheme_seed=ft.colors.RED_700)
     page.window.width = 800
     page.window.height = 600
     page.scroll = "always"
@@ -47,17 +47,25 @@ def main(page: ft.Page):
         filled=True,
         multiline=True,
         autocorrect=True,
-        min_lines=3,
-        max_lines=5,
+        min_lines=4,
+        max_lines=6,
         max_length=200)
     
-    button = ft.TextButton(text= 'Guardar')
-    
-    button_container = ft.Container(
-        content = button,
-        bgcolor = ft.colors.with_opacity(0.3,'White')
-    )
+    button_add = ft.ElevatedButton(
+        text='Guardar',
+        icon=ft.icons.ADD,
+        color=ft.colors.GREEN_ACCENT,
+        width=page.window.width * 1.50 / 4,
+        height=40
+        )
 
+    button_cancel = ft.ElevatedButton(
+        text='Guardar',
+        icon=ft.icons.CANCEL,
+        color=ft.colors.RED,
+        width=page.window.width * 1.25 / 4,
+        height=40
+        )
 
     content = ft.Container(
         content=ft.Column([
@@ -69,7 +77,10 @@ def main(page: ft.Page):
                 font_family='monospace'),
             titlebox,
             contentbox,
-            button_container
+            ft.Row([
+                button_add,
+                button_cancel
+            ])
         ]),
         height=page.window.height,
         width=page.window.width * 3 / 4,
