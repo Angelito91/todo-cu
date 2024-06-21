@@ -28,7 +28,7 @@ def main(page: ft.Page):
 
     titlebox = ft.TextField(
         label='Titulo',
-        hint_text="Escriba un titulo.. Ej: Primera nota",
+        hint_text="Escriba un titulo... Ej: Primera nota",
         prefix_icon= ft.icons.ADD_TASK,
         width=page.window.width * 2.86 / 4,
         border=ft.InputBorder.NONE,
@@ -50,6 +50,13 @@ def main(page: ft.Page):
         min_lines=3,
         max_lines=5,
         max_length=200)
+    
+    button = ft.TextButton(text= 'Guardar')
+    
+    button_container = ft.Container(
+        content = button,
+        bgcolor = ft.colors.with_opacity(0.3,'White')
+    )
 
 
     content = ft.Container(
@@ -61,7 +68,8 @@ def main(page: ft.Page):
                 weight=ft.FontWeight.BOLD,
                 font_family='monospace'),
             titlebox,
-            contentbox
+            contentbox,
+            button_container
         ]),
         height=page.window.height,
         width=page.window.width * 3 / 4,
@@ -70,7 +78,7 @@ def main(page: ft.Page):
 
     layout = ft.Row([
         sidebar,
-        content
+        content,
     ])
     page.add(layout)
 
