@@ -6,7 +6,9 @@
 [![Issues][issues-shield]][issues-url]
   
 ## Un Gestor de Notas ✌ ✨
-  
+
+<img src="assets/favicon.png" alt="todo cu logo" width="300px" hieght="200px" />
+
 Una simple app para `guardar` 💾 , `editar` 🖊️ y `organizar` 💼 tus notas 📕
 
 </div>
