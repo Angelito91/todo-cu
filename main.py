@@ -26,10 +26,20 @@ def main(page: ft.Page):
         border=ft.border.only(right=ft.border.BorderSide(0.1,ft.colors.WHITE30)),
         )
 
+    titlebox = ft.TextField(label='Titulo')
+    contentbox = ft.TextField(label='Contenido')
+
+    content = ft.Container(
+        content=ft.Column([titlebox,contentbox]),
+        height=page.window.height,
+        width=page.window.width * 3 / 4,
+        padding=ft.padding.all(5),
+    )
+
     layout = ft.Row([
         sidebar,
         ft.VerticalDivider(thickness=10,color="blue"),
-        ft.Text("Hola")
+        content
     ])
     page.add(layout)
 
