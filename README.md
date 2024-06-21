@@ -43,7 +43,7 @@ flet run
 
 
 [contributors-shield]: https://img.shields.io/github/contributors/Angelito91/todo-cu.svg?style=for-the-badge
-[contributors-url]: https://github.com/cAngelito91/todo-cu/graphs/contributors
+[contributors-url]: https://github.com/Angelito91/todo-cu/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Angelito91/todo-cu.svg?style=for-the-badge
 [forks-url]: https://github.com/Angelito91/todo-cu/network/members
 [stars-shield]: https://img.shields.io/github/stars/Angelito91/todo-cu.svg?style=for-the-badge
