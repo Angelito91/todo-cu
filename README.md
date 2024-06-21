@@ -4,10 +4,10 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-  
-## Un Gestor de Notas ✌ ✨
 
 <img src="assets/favicon.png" alt="todo cu logo" width="300px" hieght="200px" />
+
+## Un Gestor de Notas ✌ ✨
 
 Una simple app para `guardar` 💾 , `editar` 🖊️ y `organizar` 💼 tus notas 📕
 
