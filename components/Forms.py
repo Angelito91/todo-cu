@@ -36,7 +36,7 @@ def Forms(page: Page):
         )
 
     button_cancel = ElevatedButton(
-        text='Guardar',
+        text='Descartar',
         icon=icons.CANCEL,
         color=colors.RED,
         width=page.window.width * 1.25 / 4,
