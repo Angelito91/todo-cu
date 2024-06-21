@@ -44,4 +44,4 @@ def main(page: ft.Page):
     page.add(layout)
 
 
-ft.app(main)
+ft.app(main,assets_dir='./assets')
