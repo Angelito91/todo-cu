@@ -1,8 +1,8 @@
 from flet import *
 
-def Content(page: Page):
-    
-    titlebox = TextField(
+def Forms(page: Page):
+
+    title = TextField(
         label='Titulo',
         hint_text="Escriba un titulo... Ej: Primera nota",
         prefix_icon= icons.ADD_TASK,
@@ -13,7 +13,7 @@ def Content(page: Page):
         autocorrect=True,
         autofocus=True)
     
-    contentbox = TextField(
+    content = TextField(
         label='Contenido',
         hint_text="Escriba de que trata la nota..",
         prefix_icon= icons.BOOKMARKS_SHARP,
@@ -51,8 +51,8 @@ def Content(page: Page):
                 size=20,
                 weight=FontWeight.BOLD,
                 font_family='monospace'),
-            titlebox,
-            contentbox,
+            title,
+            content,
             Row([
                 button_add,
                 button_cancel
