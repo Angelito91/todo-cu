@@ -15,10 +15,10 @@ Una simple app para `guardar` 💾 , `editar` 🖊️ y `organizar` 💼 tus not
 
 ## Instalación 🛠
 
-- Instalar flet:
+- Instalar las dependencías:
 
 ```sh
-pip install flet
+pip install -r requirements.txt
 ```
 - Clonar el repositorio:
 
@@ -29,7 +29,7 @@ git clone https://github.com/Angelito91/todo-cu.git
 
 ```sh
 cd todo-cu
-python main.py
+flet run
 ```
 
 ## Contribuidores 🥳
