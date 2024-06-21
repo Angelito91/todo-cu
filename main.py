@@ -1,9 +1,9 @@
 import flet as ft
 
 def main(page: ft.Page):
-    page.title = "App"
+    page.title = "Todo-Cu"
  
-    page.add(ft.Text("Hola"))
+    page.add(ft.Text("Esto es una prueba de la conexion entre nosotros"))
 
 
 ft.app(main)
