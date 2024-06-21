@@ -35,12 +35,18 @@ def Forms(page: Page):
         height=40
         )
 
+    def cancel(e):
+        title.value = ''
+        content.value = ''
+        page.update()
+
     button_cancel = ElevatedButton(
         text='Descartar',
         icon=icons.CANCEL,
         color=colors.RED,
         width=page.window.width * 1.25 / 4,
-        height=40
+        height=40,
+        on_click = cancel
         )
 
     return Container(
