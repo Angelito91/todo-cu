@@ -2,6 +2,11 @@ from flet import *
 
 def Forms(page: Page):
 
+    def cancel(e):
+        title.value = ''
+        content.value = ''
+        page.update()
+        
     title = TextField(
         label='Titulo',
         hint_text="Escriba un titulo... Ej: Primera nota",
@@ -11,7 +16,8 @@ def Forms(page: Page):
         fill_color=colors.with_opacity(0.05,'white'),
         filled=True,
         autocorrect=True,
-        autofocus=True)
+        autofocus=True
+    )
     
     content = TextField(
         label='Contenido',
@@ -25,7 +31,8 @@ def Forms(page: Page):
         autocorrect=True,
         min_lines=4,
         max_lines=6,
-        max_length=200)
+        max_length=200
+    )
     
     button_add = ElevatedButton(
         text='Guardar',
@@ -33,12 +40,8 @@ def Forms(page: Page):
         color=colors.GREEN_ACCENT,
         width=page.window.width * 1.50 / 4,
         height=40
-        )
+    )
 
-    def cancel(e):
-        title.value = ''
-        content.value = ''
-        page.update()
 
     button_cancel = ElevatedButton(
         text='Descartar',
@@ -47,24 +50,19 @@ def Forms(page: Page):
         width=page.window.width * 1.25 / 4,
         height=40,
         on_click = cancel
-        )
-
-    return Container(
-        content=Column([
-            Text(
-                "En que piensas 🧠?",
-                text_align= TextAlign.CENTER,
-                size=20,
-                weight=FontWeight.BOLD,
-                font_family='monospace'),
-            title,
-            content,
-            Row([
-                button_add,
-                button_cancel
-            ])
-        ]),
-        height=page.window.height,
-        width=page.window.width * 3 / 4,
-        padding=padding.all(5),
     )
+
+    return Column([
+        Text(
+            "En que piensas 🧠?",
+            text_align= TextAlign.CENTER,
+            size=20,
+            weight=FontWeight.BOLD,
+            font_family='monospace'),
+        title,
+        content,
+        Row([
+            button_add,
+            button_cancel
+        ])
+    ])

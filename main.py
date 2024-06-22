@@ -1,6 +1,6 @@
 from flet import * 
 from components.Sidebar import Sidebar
-from components.Forms import Forms
+from components.Box import Box
 
 def main(page: Page):
     page.title = "ToDo CU"
@@ -13,12 +13,12 @@ def main(page: Page):
     page.spacing = 0
 
     sidebar = Sidebar(page)
-    forms = Forms(page)
+    box = Box(page)
 
     page.add(
         Row([
             sidebar,
-            forms
+            box
         ])
     )
 
