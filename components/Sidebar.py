@@ -11,7 +11,7 @@ def Sidebar(page: Page):
 
     username = Text(
         '👋 ' + os.environ['USER'].capitalize(),
-        size=20,
+        size=18,
         weight=FontWeight.BOLD,
     )
 
@@ -35,12 +35,19 @@ def Sidebar(page: Page):
             Column([
                 avatar,
                 username,
-                Divider(color=colors.with_opacity(0.1,colors.WHITE30))
             ],
             horizontal_alignment=CrossAxisAlignment.CENTER
             ),
+
             Column([
+                Divider(color=colors.with_opacity(0.1,colors.WHITE30)),
                 category_button,
+            ],
+            height=page.window.height * 2.2 / 4
+            ),
+
+            Column([
+                Divider(color=colors.with_opacity(0.1,colors.WHITE30)),
                 config_button,
                 exit_button
             ]),
