@@ -1,5 +1,5 @@
 from flet import *
-import os
+from getpass import getuser
 
 def Sidebar(page: Page):
     
@@ -10,7 +10,7 @@ def Sidebar(page: Page):
     )
 
     username = Text(
-        '👋 ' + os.environ['USER'].capitalize(),
+        '👋 ' + getuser().capitalize(),
         size=18,
         weight=FontWeight.BOLD,
     )
