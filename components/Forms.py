@@ -65,4 +65,8 @@ def Forms(page: Page):
             button_add,
             button_cancel
         ])
-    ])
+    ],
+    col=9,
+    height=page.window.height,
+    width=page.window.width * 3 / 4,
+    )
