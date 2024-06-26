@@ -7,9 +7,8 @@ class Forms(Column):
 
         self.page = page
 
-        self.col = 9
-        self.height=self.page.window.height,
-        self.width=self.page.window.width * 3 / 4,
+        self.height=self.page.window.height * 3.8 / 4
+        self.width=self.page.window.width * 3 / 4
 
         self.title = TextField(
             label='Titulo',
@@ -69,6 +68,7 @@ class Forms(Column):
                 self.button_cancel
             ])
         ]
+    
 
     def cancel(self, e):
         self.title.value = ''

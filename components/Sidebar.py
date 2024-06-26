@@ -3,16 +3,15 @@ from getpass import getuser
 
 
 class Sidebar(Container):
-    def __init__(self,page: Page):
+    def __init__(self, page: Page):
         super().__init__()
-        
+
         self.page = page
-        
-        self.col = 3
-        self.height = self.page.window.height
+
+        self.height = self.page.window.height * 3.8 / 4 
+        self.width = self.page.window.width * 1 / 4
         self.padding = padding.symmetric(horizontal=5, vertical=8)
-        self.border = border.only(
-            right=border.BorderSide(0.5, colors.WHITE30))
+        self.border_radius = border_radius.all(20)
         self.bgcolor = colors.with_opacity(0.05, color='red')
 
         self.avatar = CircleAvatar(
@@ -22,9 +21,10 @@ class Sidebar(Container):
         )
 
         self.username = Text(
-            '👋 ' + getuser().capitalize(),
+            getuser().capitalize() + ' 👋',
             size=18,
             weight=FontWeight.BOLD,
+            font_family='helvetica'
         )
 
         self.category_button = TextButton(
@@ -48,7 +48,7 @@ class Sidebar(Container):
             Divider(color=colors.with_opacity(0.1, colors.WHITE30)),
             Column([
                 self.category_button,
-            ]),
+            ],height=self.height * 2 / 4),
             Divider(color=colors.with_opacity(0.1, colors.WHITE30)),
             Column([
                 self.config_button,
@@ -56,9 +56,8 @@ class Sidebar(Container):
             ])
         ])
 
-    def close(self,e):
+    def close(self, e):
         self.page.window.close()
-
 
     def build(self):
         return super().build()
