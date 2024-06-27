@@ -2,13 +2,13 @@ from flet import *
 
 
 class Forms(Column):
-    def __init__(self,page):
+    def __init__(self, page):
         super().__init__()
 
         self.page = page
 
-        self.height=self.page.window.height * 3.8 / 4
-        self.width=self.page.window.width * 3 / 4
+        self.height = self.page.window.height * 3.8 / 4
+        self.width = self.page.window.width * 3 / 4
 
         self.title = TextField(
             label='Titulo',
@@ -42,7 +42,8 @@ class Forms(Column):
             icon=icons.ADD,
             color=colors.GREEN_ACCENT,
             width=self.page.window.width * 1.50 / 4,
-            height=40
+            height=40,
+            on_click= self.add
         )
 
         self.button_cancel = ElevatedButton(
@@ -68,8 +69,23 @@ class Forms(Column):
                 self.button_cancel
             ])
         ]
-    
 
+    def add(self, e):
+        if not len(self.title.value.strip()) > 0:
+            self.title.error_text = 'No haz escrito nada'
+            self.title.update()
+            return
+        
+        if not len(self.content.value.strip()) > 0:
+            self.content.error_text = 'No haz escrito nada'
+            self.content.update()
+            return
+
+        notes = self.page.client_storage.get('notes')
+        notes.append({'title':self.title.value,'content':self.content.value})
+        self.page.client_storage.set('notes',notes)
+        self.page.update()
+        
     def cancel(self, e):
         self.title.value = ''
         self.content.value = ''
