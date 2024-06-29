@@ -15,20 +15,22 @@ Una simple app para `guardar` 💾 , `editar` 🖊️ y `organizar` 💼 tus not
 
 ## Instalación 🛠
 
-- Instalar las dependencías:
-
-```sh
-pip install -r requirements.txt
-```
 - Clonar el repositorio:
 
 ```sh
 git clone https://github.com/Angelito91/todo-cu.git
 ```
-- Ejecutar la app:
+
+- Instalar las dependencías:
 
 ```sh
 cd todo-cu
+pip install -r requirements.txt
+```
+
+- Ejecutar la app:
+
+```sh
 flet run
 ```
 
