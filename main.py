@@ -20,19 +20,28 @@ def main(page: Page):
     page.window.max_height = 600
 
     page.scroll = ScrollMode.ADAPTIVE
-
     page.padding = 10
 
-    sidebar = Sidebar(page)
-    forms = Forms(page)
-    list = List(page)
+    def window_event(e):
+        if e.data == 'close':
+            page.client_storage.set('notes', notes)
+            page.window.destroy()
 
-    if not page.client_storage.contains_key('notes'):
-        page.client_storage.set('notes', [])
+    page.window.prevent_close = True
+    page.on_window_event = window_event
+
+    if page.client_storage.contains_key('notes'):
+        notes = page.client_storage.get('notes')
+    else:
+        notes = []
+
+    sidebar = Sidebar(page)
+    forms = Forms(page, notes)
+    list = List(page, notes)
 
     def route_change(route):
         page.clean()
-        
+
         if page.route == '/':
             page.add(
                 Row([
@@ -40,8 +49,8 @@ def main(page: Page):
                     list
                 ])
             )
-        
-        if page.route == '/create':         
+
+        if page.route == '/create':
             page.add(
                 Row([
                     sidebar,
@@ -53,5 +62,6 @@ def main(page: Page):
 
     page.on_route_change = route_change
     page.go('/')
+
 
 app(main, assets_dir='./assets')
