@@ -1,4 +1,5 @@
 from flet import *
+from datetime import date
 
 
 class Forms(Column):
@@ -39,6 +40,20 @@ class Forms(Column):
             max_length=200
         )
 
+        self.category = Dropdown(
+            label='Categorías',
+            width=self.page.window.width * 2.86 / 4,
+            border=InputBorder.NONE,
+            fill_color=colors.with_opacity(0.05, 'white'),
+            value='Ninguna',
+            options=[
+                dropdown.Option('Ninguna'),
+                dropdown.Option('Casa'),
+                dropdown.Option('Trabajo'),
+                dropdown.Option('Personal'),
+            ]
+        )
+
         self.button_add = ElevatedButton(
             text='Guardar',
             icon=icons.ADD,
@@ -65,6 +80,7 @@ class Forms(Column):
                 font_family='monospace'),
             self.title,
             self.content,
+            self.category,
             Row([
                 self.button_add,
                 self.button_cancel
@@ -82,10 +98,16 @@ class Forms(Column):
             self.content.update()
             return
 
-        self.notes.append({'title': self.title.value,
-                          'content': self.content.value})
+        self.notes.append({
+            'title': self.title.value,
+            'content': self.content.value,
+            'category': self.category.value,
+            'created': date.today().strftime('%d de %b de %Y')
+        })
+
         self.title.value = ''
         self.content.value = ''
+        self.category.value = 'Ninguna'
         self.update()
 
     def cancel(self, e):
