@@ -2,7 +2,7 @@ from flet import *
 from .Note import Note
 
 
-class List(Column):
+class List(ListView):
     def __init__(self, page: Page, notes: list):
         super().__init__()
 
@@ -13,7 +13,7 @@ class List(Column):
         # self.horizontal_alignment = CrossAxisAlignment.END
 
         self.height = self.page.window.height * 3.8 / 4
-        self.width = self.page.window.width * 3 / 4
+        self.width = self.page.window.width * 2.8 / 4
 
         self.controls = [
             FloatingActionButton(icon=icons.ADD, on_click=self.go_create),
@@ -29,14 +29,20 @@ class List(Column):
 
     def before_update(self):
         self.controls.clear()
-        
+
         self.controls = [
-            FloatingActionButton(icon=icons.ADD, on_click=self.go_create),
             Text(f'Tu tienes {len(self.notes)} notas')
         ]
 
         for note in self.notes:
             self.controls.append(Note(note, delete_note=self.delete_note))
+
+        self.controls.append(
+            TextButton(
+                icon=icons.ADD,
+                on_click=self.go_create
+            )
+        )
 
         return super().before_update()
 

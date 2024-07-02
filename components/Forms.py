@@ -20,7 +20,8 @@ class Forms(Column):
             fill_color=colors.with_opacity(0.05, 'white'),
             filled=True,
             autocorrect=True,
-            autofocus=True
+            autofocus=True,
+            max_length=50
         )
 
         self.content = TextField(
@@ -50,7 +51,6 @@ class Forms(Column):
         self.button_cancel = ElevatedButton(
             text='Descartar',
             icon=icons.CANCEL,
-            color=colors.RED,
             width=self.page.window.width * 1.25 / 4,
             height=40,
             on_click=self.cancel
