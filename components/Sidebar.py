@@ -1,6 +1,6 @@
 from flet import *
 from getpass import getuser
-
+from random import randint
 
 class Sidebar(Container):
     def __init__(self, page: Page):
@@ -15,13 +15,17 @@ class Sidebar(Container):
         self.bgcolor = colors.with_opacity(0.05, color='red')
 
         self.avatar = CircleAvatar(
-            foreground_image_src='https://avatars.githubusercontent.com/u/111069220',
+            content=Icon(
+                icons.PERSON,
+                size=60,
+                color='white'
+            ),
             width=100,
             height=100
         )
 
         self.username = Text(
-            getuser().capitalize() + ' 👋',
+            getuser().capitalize(),
             size=18,
             weight=FontWeight.BOLD,
             font_family='helvetica'
