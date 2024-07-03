@@ -18,7 +18,7 @@ class Note(Card):
                         icon_color='red',
                         on_click=lambda e: delete_note(note)
                     )]),
-                # on_click=lambda e: print('ads'),
+                on_click=lambda e: self.page.go('/edit/' + str(note['id'])),
             )
         ])
 

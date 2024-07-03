@@ -1,5 +1,6 @@
 from flet import *
 from datetime import date
+from uuid import uuid4
 
 
 class Forms(Column):
@@ -63,6 +64,15 @@ class Forms(Column):
             on_click=self.add_notes
         )
 
+        self.button_edit = ElevatedButton(
+            text='Guardar los cambios',
+            icon=icons.ADD,
+            color=colors.GREEN_ACCENT,
+            width=self.page.window.width * 1.50 / 4,
+            height=40,
+            on_click=self.edit_note
+        )
+
         self.button_cancel = ElevatedButton(
             text='Descartar',
             icon=icons.CANCEL,
@@ -70,22 +80,6 @@ class Forms(Column):
             height=40,
             on_click=self.cancel
         )
-
-        self.controls = [
-            Text(
-                "En que piensas 🧠?",
-                text_align=TextAlign.CENTER,
-                size=20,
-                weight=FontWeight.BOLD,
-                font_family='monospace'),
-            self.title,
-            self.content,
-            self.category,
-            Row([
-                self.button_add,
-                self.button_cancel
-            ])
-        ]
 
     def add_notes(self, e):
         if not len(self.title.value.strip()) > 0:
@@ -99,6 +93,7 @@ class Forms(Column):
             return
 
         self.notes.append({
+            'id': uuid4(),
             'title': self.title.value,
             'content': self.content.value,
             'category': self.category.value,
@@ -110,8 +105,82 @@ class Forms(Column):
         self.category.value = 'Ninguna'
         self.update()
 
+    def edit_note(self, e):
+        if not len(self.title.value.strip()) > 0:
+            self.title.error_text = 'No haz escrito nada'
+            self.title.update()
+            return
+
+        if not len(self.content.value.strip()) > 0:
+            self.content.error_text = 'No haz escrito nada'
+            self.content.update()
+            return
+
+        troute = TemplateRoute(self.page.route)
+
+        if troute.match('/edit/:id'):
+            for index, note in enumerate(self.notes):
+                if str(note['id']) == troute.id:
+                    self.notes[index] = {
+                        'id': self.notes[index]['id'],
+                        'title': self.title.value,
+                        'content': self.content.value,
+                        'category': self.category.value,
+                        'created': self.notes[index]['created']
+                    }
+
+            self.title.value = ''
+            self.content.value = ''
+            self.category.value = 'Ninguna'
+            self.page.go('/')
+
     def cancel(self, e):
         self.page.go('/')
+
+    def before_update(self):
+        troute = TemplateRoute(self.page.route)
+
+        if troute.match('/edit/:id'):
+            for note in self.notes:
+                if str(note['id']) == troute.id:
+                    self.title.value = note['title']
+                    self.content.value = note['content']
+                    self.category.value = note['category']
+
+            self.controls = [
+                Text(
+                    "En que piensas 🧠?",
+                    text_align=TextAlign.CENTER,
+                    size=20,
+                    weight=FontWeight.BOLD,
+                    font_family='monospace'),
+                self.title,
+                self.content,
+                self.category,
+                Row([
+                    self.button_edit,
+                    self.button_cancel
+                ])
+            ]
+
+        else:
+            self.controls = [
+                Text(
+                    "En que piensas 🧠?",
+                    text_align=TextAlign.CENTER,
+                    size=20,
+                    weight=FontWeight.BOLD,
+                    font_family='monospace'),
+                self.title,
+                self.content,
+                self.category,
+                Row([
+                    self.button_add,
+                    self.button_cancel
+                ])
+            ]
+
+        return super().before_update()
 
     def build(self):
         return super().build()

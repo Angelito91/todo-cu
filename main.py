@@ -30,6 +30,8 @@ def main(page: Page):
     page.window.prevent_close = True
     page.on_window_event = window_event
 
+    page.client_storage.clear()
+    
     if page.client_storage.contains_key('notes'):
         notes = page.client_storage.get('notes')
     else:
@@ -50,7 +52,7 @@ def main(page: Page):
                 ])
             )
 
-        if page.route == '/create':
+        if page.route == '/create' or TemplateRoute(page.route).match('/edit/:id'):
             page.add(
                 Row([
                     sidebar,
