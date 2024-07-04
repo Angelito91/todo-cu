@@ -25,8 +25,16 @@ class List(Column):
             ]
         )
 
-    def go_create(self, e):
-        self.page.go('/create')
+        self.controls = [
+            Row([
+                IconButton(
+                    icon=icons.ADD,
+                    on_click=lambda e: self.page.go('/create'),
+                ),
+                self.select_category
+            ]),
+            Text(f'Tu tienes {len(self.notes)} notas'),
+        ]
 
     def change_category(self, e):
         option = int(e.data)
@@ -50,36 +58,11 @@ class List(Column):
         self.update()
 
     def before_update(self):
-        self.controls.clear()
-
-        if len(self.notes) > 10:
-            self.controls = [
-                Row([
-                    IconButton(
-                        icon=icons.ADD,
-                        on_click=self.go_create,
-                    ),
-                    self.select_category
-                ]),
-                Text(f'Tu tienes {len(self.notes)} notas'),
-            ]
-        else:
-            self.controls = [
-                self.select_category,
-                Text(f'Tu tienes {len(self.notes)} notas'),
-            ]
+        del self.controls[2:]
 
         for note in self.notes:
             if note['category'] in self.category:
                 self.controls.append(Note(note, delete_note=self.delete_note))
-
-        self.controls.append(
-            IconButton(
-                icon=icons.ADD,
-                on_click=self.go_create,
-                width=self.page.window.width * 2.8 / 4
-            )
-        )
 
         return super().before_update()
 

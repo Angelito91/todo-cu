@@ -61,7 +61,7 @@ class Forms(Column):
             color=colors.GREEN_ACCENT,
             width=self.page.window.width * 1.50 / 4,
             height=40,
-            on_click=self.add_notes
+            on_click=self.add_note
         )
 
         self.button_edit = ElevatedButton(
@@ -78,107 +78,86 @@ class Forms(Column):
             icon=icons.CANCEL,
             width=self.page.window.width * 1.25 / 4,
             height=40,
-            on_click=self.cancel
+            on_click=lambda e: self.reset_values()
         )
 
-    def add_notes(self, e):
+        self.controls = [
+            Text(
+                "En que piensas 🧠?",
+                text_align=TextAlign.CENTER,
+                size=20,
+                weight=FontWeight.BOLD,
+                font_family='monospace'),
+            self.title,
+            self.content,
+            self.category,
+            Row([
+                self.button_add,
+                self.button_cancel
+            ])
+        ]
+
+    def check_values(self):
         if not len(self.title.value.strip()) > 0:
             self.title.error_text = 'No haz escrito nada'
             self.title.update()
-            return
+            return False
 
         if not len(self.content.value.strip()) > 0:
             self.content.error_text = 'No haz escrito nada'
             self.content.update()
-            return
+            return False
 
-        self.notes.append({
-            'id': uuid4(),
-            'title': self.title.value,
-            'content': self.content.value,
-            'category': self.category.value,
-            'created': date.today().strftime('%d de %b de %Y')
-        })
+        return True
 
+    def reset_values(self):
         self.title.value = ''
         self.content.value = ''
         self.category.value = 'Ninguna'
-        self.update()
+        self.page.go('/')
+
+    def add_note(self, e):
+        if self.check_values():
+            self.notes.append({
+                'id': str(uuid4()),
+                'title': self.title.value,
+                'content': self.content.value,
+                'category': self.category.value,
+                'created': date.today().strftime('%d de %b de %Y')
+            })
+
+            self.reset_values()
 
     def edit_note(self, e):
-        if not len(self.title.value.strip()) > 0:
-            self.title.error_text = 'No haz escrito nada'
-            self.title.update()
-            return
+        if self.check_values():
+            troute = TemplateRoute(self.page.route)
 
-        if not len(self.content.value.strip()) > 0:
-            self.content.error_text = 'No haz escrito nada'
-            self.content.update()
-            return
+            if troute.match('/edit/:id'):
+                for index, note in enumerate(self.notes):
+                    if note['id'] == troute.id:
+                        self.notes[index] = {
+                            'id': self.notes[index]['id'],
+                            'title': self.title.value,
+                            'content': self.content.value,
+                            'category': self.category.value,
+                            'created': self.notes[index]['created']
+                        }
 
-        troute = TemplateRoute(self.page.route)
-
-        if troute.match('/edit/:id'):
-            for index, note in enumerate(self.notes):
-                if str(note['id']) == troute.id:
-                    self.notes[index] = {
-                        'id': self.notes[index]['id'],
-                        'title': self.title.value,
-                        'content': self.content.value,
-                        'category': self.category.value,
-                        'created': self.notes[index]['created']
-                    }
-
-            self.title.value = ''
-            self.content.value = ''
-            self.category.value = 'Ninguna'
-            self.page.go('/')
-
-    def cancel(self, e):
-        self.page.go('/')
+                self.reset_values()
 
     def before_update(self):
         troute = TemplateRoute(self.page.route)
 
         if troute.match('/edit/:id'):
             for note in self.notes:
-                if str(note['id']) == troute.id:
+                if note['id'] == troute.id:
                     self.title.value = note['title']
                     self.content.value = note['content']
                     self.category.value = note['category']
 
-            self.controls = [
-                Text(
-                    "En que piensas 🧠?",
-                    text_align=TextAlign.CENTER,
-                    size=20,
-                    weight=FontWeight.BOLD,
-                    font_family='monospace'),
-                self.title,
-                self.content,
-                self.category,
-                Row([
-                    self.button_edit,
-                    self.button_cancel
-                ])
-            ]
-
+            self.controls[4].controls[0] = self.button_edit
         else:
-            self.controls = [
-                Text(
-                    "En que piensas 🧠?",
-                    text_align=TextAlign.CENTER,
-                    size=20,
-                    weight=FontWeight.BOLD,
-                    font_family='monospace'),
-                self.title,
-                self.content,
-                self.category,
-                Row([
-                    self.button_add,
-                    self.button_cancel
-                ])
-            ]
+            self.controls[4].controls[0] = self.button_add
 
         return super().before_update()
 
